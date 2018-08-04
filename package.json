@@ -1,0 +1,41 @@
+{
+  "name": "intuit-react-demo",
+  "version": "1.0.0",
+  "description": "React Demo for Intuit",
+  "main": "index.js",
+  "scripts": {
+    "start": "webpack-dev-server --mode development --open --hot",
+    "build": "webpack --mode production"
+  },
+  "author": "J.B.",
+  "license": "MIT",
+  "dependencies": {
+    "ajv": "^6.0.0",
+    "bootstrap-scss": "^4.1.3",
+    "jquery": "^3.3.1",
+    "lodash": "^4.17.10",
+    "popper.js": "^1.14.2",
+    "react": "^16.4.1",
+    "react-dom": "^16.4.1"
+  },
+  "devDependencies": {
+    "autoprefixer": "^8.6.5",
+    "babel-core": "^6.26.3",
+    "babel-loader": "^7.1.5",
+    "babel-preset-env": "^1.7.0",
+    "babel-preset-react": "^6.24.1",
+    "css-loader": "^1.0.0",
+    "file-loader": "^1.1.11",
+    "html-webpack-plugin": "^3.2.0",
+    "mini-css-extract-plugin": "^0.4.1",
+    "node-sass": "^4.9.2",
+    "postcss-loader": "^2.1.6",
+    "sass-loader": "^7.0.3",
+    "style-loader": "^0.21.0",
+    "webpack": "^4.16.0",
+    "webpack-cli": "^3.0.8",
+    "webpack-dev-server": "^3.1.4",
+    "webpack-merge": "^4.1.3",
+    "xml-loader": "^1.2.1"
+  }
+}
