@@ -1,0 +1,21 @@
+
+
+.close {
+    &.close-right-top {
+        position: absolute;
+        right: 15px;
+    }
+}
+
+.card-body {
+    &--toggle {
+        &:hover {
+            cursor: pointer;
+        }
+    }
+}
+
+p:not(:last-of-type) {
+    margin-bottom: 0;
+}
+

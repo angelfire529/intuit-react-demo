@@ -1,0 +1,12 @@
+div.add-contact {
+    padding: 0 25px;
+    color: darkgrey;
+
+    &:hover {
+        cursor: pointer;
+    }
+    span {
+        font-size: 160px;
+        
+    }
+}
