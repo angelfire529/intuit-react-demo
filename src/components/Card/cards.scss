@@ -8,6 +8,12 @@ div.add-contact {
     }
     span {
         font-size: 160px;
-        
+        position: relative;
+        top: -57px;
+    }
+
+    p {
+        position: relative;
+        bottom: 75px;
     }
 }
