@@ -66,11 +66,11 @@ class Card extends Component{
                     </h4>
                    <Collapse isOpen={this.state.collapse}>
                    <div>
-                    <Label>Email</Label>
+                    <Label className="text--bold">Email</Label>
                     <p>{this.props.contact.email}</p>
                     </div>
                     <div>
-                    <Label>Title</Label>
+                    <Label className="text--bold">Title</Label>
                     <p>{this.props.contact.title}</p>
                     </div>
                    </Collapse>

@@ -8,3 +8,9 @@ body {
 #app {
     margin-top: 50px;
 }
+
+.text {
+    &--bold {
+        font-weight: 500;
+    }
+}
