@@ -1,9 +1,14 @@
 import React, {Component} from 'react';
-import 'bootstrap-scss'
+import 'bootstrap-scss';
+import { library } from '@fortawesome/fontawesome-svg-core';
+import { faAngleDown, faAngleUp, faEdit } from '@fortawesome/free-solid-svg-icons';
 import './app.scss';
-import Cards from './Cards';
+import Cards from './Card/Cards';
+
+library.add(faAngleDown, faAngleUp, faEdit);
 
 class App extends Component {
+	
 	render () {
 		return (
 			<div className="container-fluid">

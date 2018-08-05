@@ -10,6 +10,9 @@
   "author": "J.B.",
   "license": "MIT",
   "dependencies": {
+    "@fortawesome/fontawesome-svg-core": "^1.2.0-14",
+    "@fortawesome/free-solid-svg-icons": "^5.1.0-11",
+    "@fortawesome/react-fontawesome": "0.1.0-11",
     "ajv": "^6.0.0",
     "bootstrap-scss": "^4.1.3",
     "jquery": "^3.3.1",
@@ -17,6 +20,7 @@
     "popper.js": "^1.14.2",
     "react": "^16.4.1",
     "react-dom": "^16.4.1",
+    "react-input-mask": "^2.0.2",
     "reactstrap": "^6.3.1"
   },
   "devDependencies": {
