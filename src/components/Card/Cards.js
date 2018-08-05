@@ -1,4 +1,5 @@
 import React, {Component} from 'react';
+import axios from 'axios';
 import _ from 'lodash';
 import 'bootstrap-scss';
 import './cards.scss';
@@ -10,11 +11,7 @@ class Cards extends Component {
     constructor() {
         super();
         this.state = {
-            contacts: [
-                {firstName: 'Joe', lastName: 'Shmoe', phone: '5552221123', email: 'jshmoe@gmail.com', title: 'Director of Finance'},
-                {firstName: 'Jane', lastName: 'Doe', phone: '4159874521', email: 'kdoe@gmail.com', title: 'Sr. Accounts Manager'},
-                {firstName: 'Mike', lastName: 'Hannity', phone: '5322221123', email: 'mhannity@gmail.com', title: 'Sales'},
-            ],
+            contacts: [],
             selectedContact: null,
             openModal: false,
             isAdd: false,
@@ -27,6 +24,18 @@ class Cards extends Component {
         this.getIndex = this.getIndex.bind(this);
         this.updateContact = this.updateContact.bind(this);
         this.isUnique = this.isUnique.bind(this);
+    }
+
+    componentWillMount() {
+        axios.get('contacts.json')
+        .then( response => {
+            this.setState({
+                contacts: response.data
+            })
+        })
+        .catch(error => {
+            console.log(error)
+        })
     }
 
     remove(i, e) {

@@ -1,0 +1,5 @@
+[
+    {"firstName": "Joe", "lastName": "Shmoe", "phone": "5552221123", "email": "jshmoe@gmail.com", "title": "Director of Finance"},
+    {"firstName": "Jane", "lastName": "Doe", "phone": "4159874521", "email": "kdoe@gmail.com", "title": "Sr. Accounts Manager"},
+    {"firstName": "Mike", "lastName": "Hannity", "phone": "5322221123", "email": "mhannity@gmail.com", "title": "Sales"}
+]

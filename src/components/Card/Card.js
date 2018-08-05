@@ -46,6 +46,10 @@ class Card extends Component{
         this.props.getContact(contact);
     }
 
+    formatPhone (number) {
+        return `(${number.substring(0,3)}) ${number.substring(3,6)}-${number.substring(6)}`
+    }
+
 
         
     render() {
@@ -71,7 +75,7 @@ class Card extends Component{
                     </div>
                    </Collapse>
                     <div className="card-text">
-                        <p>{this.props.contact.phone}</p>
+                        <p>{this.formatPhone(this.props.contact.phone)}</p>
                     </div> 
                 </div>
                 </div>
