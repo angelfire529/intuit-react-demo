@@ -15,7 +15,6 @@ class Cards extends Component {
             selectedContact: null,
             openModal: false,
             isAdd: false,
-            isEdit: false,
         }
 
 
@@ -24,6 +23,8 @@ class Cards extends Component {
         this.getIndex = this.getIndex.bind(this);
         this.updateContact = this.updateContact.bind(this);
         this.isUnique = this.isUnique.bind(this);
+        this.formatPhone = this.formatPhone.bind(this);
+        this.onExit = this.onExit.bind(this);
     }
 
     componentWillMount() {
@@ -58,6 +59,7 @@ class Cards extends Component {
     }
 
     addContact(contact) {
+        contact.phone = this.formatPhone(contact.phone);
         this.setState(prevState => {
             prevState.contacts.push(contact)
             return {
@@ -67,6 +69,7 @@ class Cards extends Component {
     }
 
     updateContact(original, newContact) {
+        newContact.phone = this.formatPhone(newContact.phone);
         this.setState(prevState => {
            let index = prevState.contacts.indexOf(original);
            _.merge(prevState.contacts[index], newContact);
@@ -81,6 +84,11 @@ class Cards extends Component {
             return c.firstName.trim().toUpperCase() === contact.firstName.trim().toUpperCase() 
             && c.lastName.trim().toUpperCase() === contact.lastName.trim().toUpperCase() 
             || c.email.trim().toUpperCase() === contact.email.trim().toUpperCase()})===-1;
+    }
+
+    formatPhone (phoneNumber) {
+        const number = phoneNumber.match(/\d/g);
+        return number.join('');
     }
 
     getContact(contact) {
@@ -103,6 +111,13 @@ class Cards extends Component {
         this.setState(prevState => {
             return {
                 openModal: !prevState.openModal,
+            }
+        });
+    }
+
+    onExit() {
+        this.setState(prevState => {
+            return {
                 isAdd: false,
             }
         });
@@ -118,11 +133,11 @@ class Cards extends Component {
         return (
             <div className="row">
                 {this.printCards()}
-                <div className="add-contact" onClick={this.openAddContact.bind(this)}>
+                <div className="col-lg-3 col-md-4 col-sm-6 col-xs-12 add-contact" onClick={this.openAddContact.bind(this)}>
                 <span className="add">&#43;</span>
                 <p>Add new contact</p>
                 </div>
-                <ContactDetails openModal={this.state.openModal} isAdd={this.state.isAdd} unique={this.isUnique} toggle={this.toggle} add={this.addContact.bind(this)} update={this.updateContact} contact={this.state.selectedContact} />
+                <ContactDetails openModal={this.state.openModal} isAdd={this.state.isAdd} unique={this.isUnique} toggle={this.toggle} onExit={this.onExit} add={this.addContact.bind(this)} update={this.updateContact} contact={this.state.selectedContact} />
             </div>
         );
     };

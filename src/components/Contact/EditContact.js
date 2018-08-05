@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import { Form, FormGroup, Label, Input, FormText, CustomInput } from 'reactstrap';
+import { Form, FormGroup, Label, Input, FormText, CustomInput, Alert } from 'reactstrap';
 import InputMask from 'react-input-mask';
 import Contact from './Contact'
 
@@ -7,10 +7,13 @@ class EditContact extends Component {
    constructor(props) {
        super(props);
        this.props = props;
+       let contact = this.props.isAdd ? new Contact() : new Contact(props.contact.firstName, props.contact.lastName, props.contact.email, props.contact.phone, props.contact.title, props.contact.img)
 
        this.state = {
-           contact: new Contact(props.contact.firstName, props.contact.lastName, props.contact.email, props.contact.phone, props.contact.title, props.contact.img),
-           errors: {}
+           contact: contact,
+           errors: {},
+           showAlert: false,
+           isDupe: false
        };
 
        this.handleSubmit = this.handleSubmit.bind(this);
@@ -18,6 +21,8 @@ class EditContact extends Component {
        this.handleFormValidation = this.handleFormValidation.bind(this);
        this.validateControl = this.validateControl.bind(this);
        this.getClass = this.getClass.bind(this);
+       this.onDismiss = this.onDismiss.bind(this);
+       this.setIsDupe = this.setIsDupe.bind(this);
    }
 
    handleFormValidation() {
@@ -53,7 +58,7 @@ class EditContact extends Component {
             if(!fields.phone && typeof fields.phone === "undefined") {
                 formIsValid = false;
                 errors.phone = "Cannot be empty";
-            } else if(fields.phone.length < 11 || fields.phone.length > 10) {
+            } else if(fields.phone.length < 10) {
                 formIsValid = false;
                 errors.phone = "Enter valid phone number including area code";
             }
@@ -75,6 +80,20 @@ class EditContact extends Component {
     return formIsValid;
 }
 
+onDismiss() {
+    this.setState(prevState => {
+        return {
+            showAlert: !prevState.showAlert
+        };
+    })
+}
+
+setIsDupe(condition) {
+    this.setState({
+        isDupe: condition
+    })
+}
+
 validateControl(name) {
     let errors = this.state.errors;
     return errors[name] ? true : false;
@@ -86,50 +105,74 @@ getClass() {
 
    handleSubmit(e) {
        if(this.handleFormValidation()) {
-        this.props.update(this.props.contact, this.state.contact);
-        this.props.toggle(e);
+           let close = true;
+        switch(this.props.isAdd) {
+            case true :
+                let isUnique = this.props.unique(this.state.contact);
+                this.setIsDupe(!isUnique);
+                if(isUnique) {
+                    this.props.add(this.state.contact);
+                } else {
+                    close = false;
+                    this.onDismiss();
+                }
+            break;
+            default:
+                this.props.update(this.props.contact, this.state.contact);
+            break;
+        }
+        if (close) {
+            this.props.toggle(e);
+        }
+       } 
+       else {
+           this.onDismiss();
        }
         
     }
 
     handleInputChange(e) {
-        const target = e.target;
-        const value = target.value;
-        const name = target.name;
+        const value = e.target.value;
+        const name = e.target.name;
         
         this.setState(prevState => {
             delete prevState.errors[name];
+            prevState.contact[name] = value;
             return {
-                contact: {
-                    [name]: value
-                },
+                contact: prevState.contact,
                 errors: prevState.errors
             }
         })
     }
+
     
    render() {
+       const msg = this.state.isDupe ? 'No duplicates allowed' : 'There were errors on the page';
     return (
-        <Form>
-            <FormGroup onSubmit={this.handleSubmit}>
+        <div>
+             <Alert color="danger" isOpen={this.state.showAlert} toggle={this.onDismiss}>
+                {msg}
+            </Alert>
+        <Form onSubmit={this.handleSubmit}>
+            <FormGroup >
             <Label for="firstName">FirstName</Label>
-            <Input type="text" name="firstName" invalid={this.validateControl('firstName')}  value={this.state.contact.firstName}  onChange={this.handleInputChange}/>
+            <Input type="text" name="firstName" invalid={this.validateControl('firstName')}  value={this.state.contact.firstName}  onChange={this.handleInputChange} placeholder="Enter first name"/>
             </FormGroup>
             <FormGroup>
             <Label for="lastName">LastName</Label>
-            <Input type="text" name="lastName" invalid={this.validateControl('lastName')} value={this.state.contact.lastName}  onChange={this.handleInputChange}/>
+            <Input type="text" name="lastName" invalid={this.validateControl('lastName')} value={this.state.contact.lastName}  onChange={this.handleInputChange} placeholder="Enter last name"/>
             </FormGroup>
             <FormGroup>
             <Label for="exampleEmail">Email</Label>
-            <Input type="email" name="email" invalid={this.validateControl('email')} value={this.state.contact.email}  onChange={this.handleInputChange}/>
+            <Input type="email" name="email" invalid={this.validateControl('email')} value={this.state.contact.email}  onChange={this.handleInputChange} placeholder="Enter an email"/>
             </FormGroup>
             <FormGroup>
             <Label for="phone">Title</Label>
-            <Input type="text" name="title" invalid={this.validateControl('title')} value={this.state.contact.title}  onChange={this.handleInputChange}/>
+            <Input type="text" name="title" invalid={this.validateControl('title')} value={this.state.contact.title}  onChange={this.handleInputChange} placeholder="Enter a job title"/>
             </FormGroup>
             <FormGroup>
             <Label for="phone">Phone Number</Label>
-            <InputMask type="tel" className={this.getClass()} name="phone" mask="(999)999-9999" maskChar="_"  value={this.state.contact.phone} onChange={this.handleInputChange} />
+            <InputMask type="text" className={this.getClass()} name="phone" mask="(999)999-9999" maskChar="_" placeholder="Enter a phone number including area code"  value={this.state.contact.phone} onChange={this.handleInputChange} />
             </FormGroup>
             <FormGroup>
             <FormGroup>
@@ -144,7 +187,8 @@ getClass() {
             Please choose an image to upload with your contact information
           </FormText>
         </FormGroup>
-        </Form>
+        </Form>      
+        </div>
     );
    }
 }
