@@ -6,31 +6,31 @@ import Contact from './Contact'
 import './editContact.scss';
 
 const FormInput = (props) => {
-    switch(props.addMask) {
-        case "true":
-            const handleClass = (name) => {
-                return props.getClass(name);
-            }
-            const getMask = (maskType) => {
-                switch(maskType) {
-                    default:
-                        return "(999)999-9999"
-                }
-            }
-            return (
-                <FormGroup>
-                    <Label for={props.name}>{props.label}</Label>
-                    <InputMask type="text" className={handleClass(props.name)} name={props.name} mask={getMask(props.maskType)} maskChar="_" placeholder={props.placeholder}  value={props.contact[props.name]} onChange={props.handleInputChange} />
-                </FormGroup>
-            )
-        default:
-        return (
-            <FormGroup >
-                <Label for={props.name}>{props.label}</Label>
-                <Input type={props.type} name={props.name} invalid={props.onValidate(props.name)}  value={props.contact[props.name]}  onChange={props.handleInputChange} placeholder={props.placeholder}/>
-             </FormGroup>
-        );
+    const handleClass = (name) => {
+        return props.getClass(name);
     }
+    const getMask = (maskType) => {
+        switch(maskType) {
+            default:
+                return "(999)999-9999"
+        }
+    }
+
+    const getInputType = (addMask) => {
+        switch(addMask) {
+            case "true":
+                return <InputMask type="text" className={handleClass(props.name)} name={props.name} mask={getMask(props.maskType)} maskChar="_" placeholder={props.placeholder}  value={props.contact[props.name]} onChange={props.handleInputChange} />
+            default:
+                return <Input type={props.type} name={props.name} invalid={props.onValidate(props.name)}  value={props.contact[props.name]}  onChange={props.handleInputChange} placeholder={props.placeholder}/>
+        }
+    }
+
+    return (
+        <FormGroup >
+            <Label for={props.name}>{props.label}</Label>
+            {getInputType(props.addMask)}
+         </FormGroup>
+    );
 }
 
 
