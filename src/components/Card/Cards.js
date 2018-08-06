@@ -51,8 +51,8 @@ class Cards extends Component {
         })
     }
 
-    openAddContact(e) {
-        e.preventDefault();
+    openAddContact() {
+       
         return this.setState({
             openModal: true,
             isAdd: true
