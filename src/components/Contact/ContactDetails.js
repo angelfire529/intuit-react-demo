@@ -26,7 +26,7 @@ class ContactDetails extends Component {
                     <ModalHeader toggle={this.props.toggle}>{this.props.isAdd ? 'Add Contact' : 'Edit Contact'}</ModalHeader>
                     <ModalBody>
                     <EditContact ref="editForm" contact={this.props.contact} update={this.props.update} add={this.props.add} 
-                    isAdd={this.props.isAdd} unique={this.props.unique} toggle={this.props.toggle} />
+                    isAdd={this.props.isAdd} unique={this.props.unique} toggle={this.props.toggle} formatPhone={this.props.formatPhone}/>
                     </ModalBody>
                     <ModalFooter>
                     <Button color="primary" type="submit" onClick={this.handleAction}>{btnMsg}</Button>{' '}

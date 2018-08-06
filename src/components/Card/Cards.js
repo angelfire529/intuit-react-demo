@@ -1,10 +1,10 @@
 import React, {Component} from 'react';
-import axios from 'axios';
 import _ from 'lodash';
 import 'bootstrap-scss';
 import './cards.scss';
-import Card from './Card';
+import {Card} from './Card';
 import ContactDetails from '../Contact/ContactDetails';
+import ContactsService from '../../services/ContactsService';
 
 
 class Cards extends Component {
@@ -19,16 +19,18 @@ class Cards extends Component {
 
 
         this.toggle = this.toggle.bind(this);
+        this.toggleCollapse = this.toggleCollapse.bind(this);
         this.getContact = this.getContact.bind(this);
         this.getIndex = this.getIndex.bind(this);
         this.updateContact = this.updateContact.bind(this);
         this.isUnique = this.isUnique.bind(this);
         this.formatPhone = this.formatPhone.bind(this);
         this.onExit = this.onExit.bind(this);
+        this.addContact = this.addContact.bind(this);
     }
 
     componentWillMount() {
-        axios.get('contacts.json')
+        ContactsService.GetContacts()
         .then( response => {
             this.setState({
                 contacts: response.data
@@ -102,7 +104,6 @@ class Cards extends Component {
         return this.state.contacts.indexOf(contact);
     }
     
-
     toggle(e) {
         if(e) {
             e.preventDefault();
@@ -115,6 +116,15 @@ class Cards extends Component {
         });
     }
 
+    toggleCollapse(index){
+        this.setState(prevState => {
+            prevState.contacts[index].collapse = !prevState.contacts[index].collapse; 
+            return {
+                contacts: prevState.contacts
+            }
+        })
+    }
+
     onExit() {
         this.setState(prevState => {
             return {
@@ -125,7 +135,7 @@ class Cards extends Component {
 
     printCards () {
        return this.state.contacts.map((contact, i) => {
-          return <Card key={i} contact={contact} remove={this.remove.bind(this, i)} index={i} getContact={this.getContact}/>
+          return <Card key={i} contact={contact} remove={this.remove.bind(this, i)} index={i} collapse={contact.collapse} getContact={this.getContact} toggle={this.toggleCollapse}/>
         })
     }
 
@@ -137,7 +147,9 @@ class Cards extends Component {
                 <span className="add">&#43;</span>
                 <p>Add new contact</p>
                 </div>
-                <ContactDetails openModal={this.state.openModal} isAdd={this.state.isAdd} unique={this.isUnique} toggle={this.toggle} onExit={this.onExit} add={this.addContact.bind(this)} update={this.updateContact} contact={this.state.selectedContact} />
+                <ContactDetails openModal={this.state.openModal} isAdd={this.state.isAdd} unique={this.isUnique} 
+                toggle={this.toggle} onExit={this.onExit} add={this.addContact} update={this.updateContact} 
+                contact={this.state.selectedContact} formatPhone={this.formatPhone}/>
             </div>
         );
     };

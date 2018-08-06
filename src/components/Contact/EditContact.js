@@ -3,6 +3,8 @@ import { Form, FormGroup, Label, Input, FormText, CustomInput, Alert } from 'rea
 import InputMask from 'react-input-mask';
 import Contact from './Contact'
 
+import './editContact.scss';
+
 class EditContact extends Component {
    constructor(props) {
        super(props);
@@ -58,7 +60,7 @@ class EditContact extends Component {
             if(!fields.phone && typeof fields.phone === "undefined") {
                 formIsValid = false;
                 errors.phone = "Cannot be empty";
-            } else if(fields.phone.length < 10) {
+            } else if(this.props.formatPhone(fields.phone).length < 10) {
                 formIsValid = false;
                 errors.phone = "Enter valid phone number including area code";
             }
@@ -100,7 +102,8 @@ validateControl(name) {
 }
 
 getClass() {
-    return `form-control ${this.state.errors.phone ? 'error--border' : ''}`
+    let classes = `form-control ${this.state.errors.phone ==null ? '' : 'error--border'}`;
+    return classes
 }
 
    handleSubmit(e) {
