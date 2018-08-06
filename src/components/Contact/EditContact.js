@@ -9,7 +9,7 @@ class EditContact extends Component {
    constructor(props) {
        super(props);
        this.props = props;
-       let contact = this.props.isAdd ? new Contact() : new Contact(props.contact.firstName, props.contact.lastName, props.contact.email, props.contact.phone, props.contact.title, props.contact.img)
+       let contact = this.props.isAdd ? new Contact() : new Contact(props.contact.firstName, props.contact.lastName, props.contact.email, props.contact.phone, props.contact.title, props.contact.img, props.contact.collapse)
 
        this.state = {
            contact: contact,
