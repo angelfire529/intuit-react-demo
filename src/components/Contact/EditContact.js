@@ -5,6 +5,34 @@ import Contact from './Contact'
 
 import './editContact.scss';
 
+const FormInput = (props) => {
+    switch(props.addMask) {
+        case "true":
+            const handleClass = (name) => {
+                return props.getClass(name);
+            }
+            const getMask = (maskType) => {
+                switch(maskType) {
+                    default:
+                        return "(999)999-9999"
+                }
+            }
+            return (
+                <FormGroup>
+                    <Label for={props.name}>{props.label}</Label>
+                    <InputMask type="text" className={handleClass(props.name)} name={props.name} mask={getMask(props.maskType)} maskChar="_" placeholder={props.placeholder}  value={props.contact[props.name]} onChange={props.handleInputChange} />
+                </FormGroup>
+            )
+        default:
+        return (
+            <FormGroup >
+                <Label for={props.name}>{props.label}</Label>
+                <Input type={props.type} name={props.name} invalid={props.onValidate(props.name)}  value={props.contact[props.name]}  onChange={props.handleInputChange} placeholder={props.placeholder}/>
+             </FormGroup>
+        );
+    }
+}
+
 
 class EditContact extends Component {
    constructor(props) {
@@ -160,34 +188,20 @@ getClass(name) {
                 {msg}
             </Alert>
         <Form onSubmit={this.handleSubmit}>
-            <FormGroup >
-            <Label for="firstName">FirstName</Label>
-            <Input type="text" name="firstName" invalid={this.validateControl('firstName')}  value={this.state.contact.firstName}  onChange={this.handleInputChange} placeholder="Enter first name"/>
-            </FormGroup>
-            <FormGroup>
-            <Label for="lastName">LastName</Label>
-            <Input type="text" name="lastName" invalid={this.validateControl('lastName')} value={this.state.contact.lastName}  onChange={this.handleInputChange} placeholder="Enter last name"/>
-            </FormGroup>
-            <FormGroup>
-            <Label for="exampleEmail">Email</Label>
-            <Input type="email" name="email" className={this.getClass('email')} invalid={this.validateControl('email')} value={this.state.contact.email}  onChange={this.handleInputChange} placeholder="Enter an email"/>
-            </FormGroup>
-            <FormGroup>
-            <Label for="phone">Title</Label>
-            <Input type="text" name="title" invalid={this.validateControl('title')} value={this.state.contact.title}  onChange={this.handleInputChange} placeholder="Enter a job title"/>
-            </FormGroup>
-            <FormGroup>
-            <Label for="phone">Phone Number</Label>
-            <InputMask type="text" className={this.getClass('phone')} name="phone" mask="(999)999-9999" maskChar="_" placeholder="Enter a phone number including area code"  value={this.state.contact.phone} onChange={this.handleInputChange} />
-            </FormGroup>
+            <FormInput type="text" name="firstName" label="First Name"  contact={this.state.contact} onValidate={this.validateControl} handleInputChange={this.handleInputChange} placeholder="Enter First Name"/>
+            <FormInput type="text" name="lastName" label="Last Name" contact={this.state.contact} onValidate={this.validateControl} handleInputChange={this.handleInputChange} placeholder="Enter Last Name"/>
+            <FormInput type="email" name="email" label="Email"  contact={this.state.contact} onValidate={this.validateControl} handleInputChange={this.handleInputChange} placeholder="Enter an email" />
+            <FormInput type="text" name="title" label="Title"  contact={this.state.contact} onValidate={this.validateControl} handleInputChange={this.handleInputChange} placeholder="Enter a job description"/>
+            <FormInput type="text" name="phone" label="Phonenumber" getClass={this.getClass} contact={this.state.contact} onValidate={this.validateControl} handleInputChange={this.handleInputChange} placeholder="Enter a phone number including area code" addMask="true" maskType="tel"/>
+            
             <FormGroup>
             <FormGroup>
-            <Label for="img">Image</Label>
-          <CustomInput type="select" name="img" id="imgFile-edit" value={this.state.contact.img} onChange={this.handleInputChange}>
-          <option value="">Select</option>
-          <option value="http://placekitten.com/g/700/400">Kittens</option>
-          <option value="https://dummyimage.com/700x400/000/fff&text=Nice+Placeholder">Placeholder</option>
-          </CustomInput>
+                <Label for="img">Image</Label>
+                <CustomInput type="select" name="img" id="imgFile-edit" value={this.state.contact.img} onChange={this.handleInputChange}>
+                <option value="">Select</option>
+                <option value="http://placekitten.com/g/700/400">Kittens</option>
+                <option value="https://dummyimage.com/700x400/000/fff&text=Nice+Placeholder">Placeholder</option>
+                </CustomInput>
             </FormGroup>
           <FormText color="muted">
             Please choose an image to upload with your contact information
