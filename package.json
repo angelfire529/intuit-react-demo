@@ -8,6 +8,14 @@
     "build": "webpack --mode production",
     "test": "jest"
   },
+  "jest": {
+    "verbose": true,
+    "testURL": "http://localhost/",
+    "moduleNameMapper": {
+      "\\.(jpg|jpeg|png|gif|eot|otf|webp|svg|ttf|woff|woff2|mp4|webm|wav|mp3|m4a|aac|oga)$": "<rootDir>/__mocks__/fileMock.js",
+      "\\.(css|less|scss)$": "<rootDir>/__mocks__/styleMock.js"
+    }
+  },
   "author": "J.B.",
   "license": "MIT",
   "dependencies": {
@@ -33,8 +41,11 @@
     "babel-preset-env": "^1.7.0",
     "babel-preset-react": "^6.24.1",
     "css-loader": "^1.0.0",
+    "enzyme": "^3.3.0",
+    "enzyme-adapter-react-16": "^1.1.1",
     "file-loader": "^1.1.11",
     "html-webpack-plugin": "^3.2.0",
+    "identity-obj-proxy": "^3.0.0",
     "jest": "^22.3.0",
     "mini-css-extract-plugin": "^0.4.1",
     "node-sass": "^4.9.2",
