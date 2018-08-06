@@ -1,9 +1,10 @@
 import React, {Component} from 'react';
-import { Form, FormGroup, Label, Input, FormText, CustomInput, Alert } from 'reactstrap';
+import { Form, FormGroup, Label, Input, FormText, CustomInput, Button, Alert } from 'reactstrap';
 import InputMask from 'react-input-mask';
 import Contact from './Contact'
 
 import './editContact.scss';
+
 
 class EditContact extends Component {
    constructor(props) {
@@ -101,12 +102,13 @@ validateControl(name) {
     return errors[name] ? true : false;
 }
 
-getClass() {
-    let classes = `form-control ${this.state.errors.phone == null ? '' : 'error--border'}`;
+getClass(name) {
+    let classes = `form-control ${this.state.errors[name] == null ? '' : 'error--border'}`;
     return classes
 }
 
    handleSubmit(e) {
+       e.preventDefault();
        if(this.handleFormValidation()) {
            let close = true;
         switch(this.props.isAdd) {
@@ -151,6 +153,7 @@ getClass() {
     
    render() {
        const msg = this.state.isDupe ? 'No duplicates allowed' : 'There were errors on the page';
+       const btnMsg = this.props.isAdd ? 'Add': 'Save Changes';
     return (
         <div>
              <Alert color="danger" isOpen={this.state.showAlert} toggle={this.onDismiss}>
@@ -167,7 +170,7 @@ getClass() {
             </FormGroup>
             <FormGroup>
             <Label for="exampleEmail">Email</Label>
-            <Input type="email" name="email" invalid={this.validateControl('email')} value={this.state.contact.email}  onChange={this.handleInputChange} placeholder="Enter an email"/>
+            <Input type="email" name="email" className={this.getClass('email')} invalid={this.validateControl('email')} value={this.state.contact.email}  onChange={this.handleInputChange} placeholder="Enter an email"/>
             </FormGroup>
             <FormGroup>
             <Label for="phone">Title</Label>
@@ -175,7 +178,7 @@ getClass() {
             </FormGroup>
             <FormGroup>
             <Label for="phone">Phone Number</Label>
-            <InputMask type="text" className={this.getClass()} name="phone" mask="(999)999-9999" maskChar="_" placeholder="Enter a phone number including area code"  value={this.state.contact.phone} onChange={this.handleInputChange} />
+            <InputMask type="text" className={this.getClass('phone')} name="phone" mask="(999)999-9999" maskChar="_" placeholder="Enter a phone number including area code"  value={this.state.contact.phone} onChange={this.handleInputChange} />
             </FormGroup>
             <FormGroup>
             <FormGroup>
@@ -190,6 +193,10 @@ getClass() {
             Please choose an image to upload with your contact information
           </FormText>
         </FormGroup>
+            <div className="btn-container">
+            <Button color="primary" type="submit">{btnMsg}</Button>{' '}
+            <Button color="secondary" onClick={this.props.toggle}>Cancel</Button>
+            </div>
         </Form>      
         </div>
     );
