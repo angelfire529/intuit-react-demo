@@ -1,6 +1,5 @@
 import React, {Component} from 'react';
 import _ from 'lodash';
-import 'bootstrap-scss';
 import './cards.scss';
 import {Card} from './Card';
 import ContactDetails from '../Contact/ContactDetails';

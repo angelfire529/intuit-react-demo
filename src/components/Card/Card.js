@@ -1,7 +1,5 @@
-import React, {Component} from 'react';
-import 'bootstrap-scss';
-
-import { Collapse, Button, Label, Input } from 'reactstrap';
+import React from 'react';
+import { Collapse, Label } from 'reactstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
 import './card.scss';
