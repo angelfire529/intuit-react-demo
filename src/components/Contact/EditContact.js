@@ -57,7 +57,7 @@ class EditContact extends Component {
             }
             break;
             case 'phone':
-            if(!fields.phone && typeof fields.phone === "undefined") {
+            if(!fields.phone && typeof fields.phone === "undefined" || fields.phone == '') {
                 formIsValid = false;
                 errors.phone = "Cannot be empty";
             } else if(this.props.formatPhone(fields.phone).length < 10) {
@@ -102,7 +102,7 @@ validateControl(name) {
 }
 
 getClass() {
-    let classes = `form-control ${this.state.errors.phone ==null ? '' : 'error--border'}`;
+    let classes = `form-control ${this.state.errors.phone == null ? '' : 'error--border'}`;
     return classes
 }
 
