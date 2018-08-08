@@ -1,8 +1,8 @@
 import React from 'react';
 import { Collapse, Label } from 'reactstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import {formatPhone} from "./Util";
 
-import './card.scss';
 
 export const Card = props => {
     const imgSrc = !props.contact.img ? 'http://placehold.it/700x400' : props.contact.img
@@ -18,10 +18,6 @@ export const Card = props => {
     
     const showEdit = (contact) => {
         props.getContact(contact);
-    }
-
-    const formatPhone = (number) => {
-        return `(${number.substring(0,3)}) ${number.substring(3,6)}-${number.substring(6)}`
     }
 
     return (
