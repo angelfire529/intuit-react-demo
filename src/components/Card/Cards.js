@@ -1,9 +1,10 @@
 import React, {Component} from 'react';
 import _ from 'lodash';
-import './cards.scss';
+// import './cards.scss';
 import {Card} from './Card';
 import ContactDetails from '../Contact/ContactDetails';
 import ContactsService from '../../services/ContactsService';
+import {isUnique} from "./Util";
 
 
 class Cards extends Component {
@@ -61,7 +62,9 @@ class Cards extends Component {
 
     addContact(contact) {
         contact.phone = this.formatPhone(contact.phone);
+        //
         this.setState(prevState => {
+            //TODO: how would you do this without mutation?
             prevState.contacts.push(contact)
             return {
                 contacts: prevState.contacts
@@ -72,19 +75,18 @@ class Cards extends Component {
     updateContact(original, newContact) {
         newContact.phone = this.formatPhone(newContact.phone);
         this.setState(prevState => {
+            //TODO: time complexity?, how do you make this O(1)?
            let index = prevState.contacts.indexOf(original);
            _.merge(prevState.contacts[index], newContact);
            return {
-               contacts: prevState.contacts
+               contacts: prevState.contacts,
+
            };
         })
     }
 
     isUnique(contact) {
-        return _.findIndex(this.state.contacts, (c)=> { 
-            return c.firstName.trim().toUpperCase() === contact.firstName.trim().toUpperCase() 
-            && c.lastName.trim().toUpperCase() === contact.lastName.trim().toUpperCase() 
-            || c.email.trim().toUpperCase() === contact.email.trim().toUpperCase()})===-1;
+			return isUnique(this.state.contacts, contact);
     }
 
     formatPhone (phoneNumber) {
@@ -95,7 +97,8 @@ class Cards extends Component {
     getContact(contact) {
         this.setState({
             selectedContact: contact,
-            openModal: true
+            openModal: true,
+            isAdd: false
         })
     }
 
