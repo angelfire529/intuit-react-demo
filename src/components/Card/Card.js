@@ -3,6 +3,7 @@ import { Collapse, Label } from 'reactstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import {formatPhone} from "./Util";
 
+import './card.scss';
 
 export const Card = props => {
     const imgSrc = !props.contact.img ? 'http://placehold.it/700x400' : props.contact.img
@@ -23,7 +24,7 @@ export const Card = props => {
     return (
         <div className="col-lg-3 col-md-4 col-sm-6 col-xs-12 portfolio-item">
                 <div className="card h-100">
-                <button type="button" className="close close-right-top" aria-label="Close" onClick={props.remove}><span aria-hidden="true">&times;</span></button>
+                <span className="close close-right-top" aria-label="Close" onClick={props.remove}>&times;</span>
                 <img className="card-img-top" src={imgSrc} alt="" />
                 <div className="card-body card-body--toggle">
                 <FontAwesomeIcon icon="edit" className="card-edit"  pull="right" onClick={showEdit.bind(this, props.contact)}/>

@@ -1,9 +1,13 @@
 
 
 .close {
-    &.close-right-top {
+    &:hover {
+        cursor: pointer;
+    }
+    &-right-top {
         position: absolute;
         right: 15px;
+        top: 5px;
     }
 }
 

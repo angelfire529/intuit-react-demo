@@ -6,6 +6,8 @@ import ContactDetails from '../Contact/ContactDetails';
 import ContactsService from '../../services/ContactsService';
 import {isUnique} from "./Util";
 
+import './cards.scss';
+
 
 class Cards extends Component {
     constructor() {
