@@ -1,10 +1,9 @@
 import React, {Component} from 'react';
 import _ from 'lodash';
-// import './cards.scss';
 import {Card} from './Card';
 import ContactDetails from '../Contact/ContactDetails';
-import ContactsService from '../../services/ContactsService';
 import {isUnique} from "./Util";
+import ContactData from '../../contacts.json';
 
 import './cards.scss';
 
@@ -32,15 +31,11 @@ class Cards extends Component {
     }
 
     componentWillMount() {
-        ContactsService.GetContacts()
-        .then( response => {
-            this.setState({
-                contacts: response.data
-            })
-        })
-        .catch(error => {
-            console.log(error)
-        })
+       let contacts = ContactData;
+       contacts.map(c => c.collapse = false);
+
+       this.setState({contacts: contacts});
+
     }
 
     remove(i, e) {

@@ -1,8 +1,0 @@
-[
-    {"firstName": "Joe", "lastName": "Shmoe", "phone": "5552221123", "email": "jshmoe@test.com", "title": "Director of Finance"},
-    {"firstName": "Jane", "lastName": "Doe", "phone": "4159874521", "email": "kdoe@test.com", "title": "Sr. Accounts Manager"},
-    {"firstName": "Mike", "lastName": "Hannity", "phone": "5322221123", "email": "mhannity@test.com", "title": "Sales"},
-    {"firstName": "Jim", "lastName": "Beam", "phone": "5632478941", "email": "jbeam@test.com", "title": "Senior UI developer"},
-    {"firstName": "Ashley", "lastName": "Wood", "phone": "4159874521", "email": "kdoe@test.com", "title": "Accounts Manager"},
-    {"firstName": "Sean", "lastName": "Combs", "phone": "6503298741", "email": "scombs@test.com", "title": "Sales"}
-]
